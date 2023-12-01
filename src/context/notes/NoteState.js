@@ -4,7 +4,7 @@ import NoteContext from "./NoteContext";
 import { json } from "react-router-dom";
 
 const NoteState = (props) => {
-  const host = "http://localhost:5000";
+  const host = "https://inotebook-6pk4.onrender.com/";
   const notesIntital = [];
 
   const [notes, setnotes] = useState(notesIntital);
