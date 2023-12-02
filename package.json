@@ -4,8 +4,9 @@
   "description": "iNoteBook - Your notebook on the cloud",
   "main": "index.js",
   "scripts": {
-     "start": "react-scripts start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+   "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test"
   },
   "author": "",
   "license": "ISC",
