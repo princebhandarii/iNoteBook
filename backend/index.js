@@ -45,7 +45,7 @@ const httpServer = http.createServer(server);
 // Attach socket.io to the http.Server instance
 const io = socket(httpServer, {
     cors: {
-        origin: 'https://metaverse-zpva.onrender.com',
+        origin: 'https://inotebook-6pk4.onrender.com',
         credentials: true
     }
 });
