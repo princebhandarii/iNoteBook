@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const dotenv = require('dotenv').config();
 const mongoURI="mongodb+srv://princebhandari:princebhandari@cluster0.9fhjmbn.mongodb.net/inotebook?retryWrites=true&w=majority";
 //const mongoURI = "mongodb://localhost:27017/";
 
