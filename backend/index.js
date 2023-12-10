@@ -30,7 +30,7 @@ const server = http.createServer(app);
 // Attach Socket.io to the HTTP server
 const io = socket(server, {
   cors: {
-    origin: 'https://inotebook-6pk4.onrender.com', // Update this with your frontend app's URL
+    origin: 'https://inotebook-6pk4.onrender.com', // Replace with your actual frontend app URL
     credentials: true,
   },
 });
