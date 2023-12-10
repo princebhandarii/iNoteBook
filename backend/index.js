@@ -18,10 +18,10 @@ app.use('/api/auth',require('./routes/auth'))
 app.use('/api/notes',require('./routes/notes'))
 
 /// static file start
-// app.use(express.static(path.join(__dirname, "../frontend/build")));
-// app.get("*", function (req, res) {
-//   res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
-// });
+ app.use(express.static(path.join(__dirname, "../frontend/build")));
+ app.get("*", function (req, res) {
+   res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+ });
 // app.get('/', (req, res) => {
 //   res.send('Hello World!')
 // })
