@@ -2,13 +2,11 @@ const connectTOMongo = require('./db');
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
-const socket = require('socket.io');
+const socketIo = require('socket.io');
 const path = require('path');
 
 connectTOMongo();
 const app = express();
-
-// Use process.env.PORT as the port or fallback to 5000
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
@@ -28,30 +26,26 @@ app.get('*', function (req, res) {
 const server = http.createServer(app);
 
 // Attach Socket.io to the HTTP server
-const io = socket(server, {
+const io = socketIo(server, {
   cors: {
     origin: 'https://inotebook-6pk4.onrender.com', // Replace with your actual frontend app URL
     credentials: true,
   },
 });
 
-global.onlineUsers = new Map();
-
 // WebSocket connection handling
 io.on('connection', (socket) => {
-  global.chatSocket = socket;
+  console.log('A user connected:', socket.id);
 
-  // Login user ID stored
-  socket.on('add-user', (userId) => {
-    onlineUsers.set(userId, socket.id);
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
   });
 
-  // Receive message
-  socket.on('send-msg', (data) => {
-    const sendUserSocket = onlineUsers.get(data.to);
-    if (sendUserSocket) {
-      socket.to(sendUserSocket).emit('msg-receive', data.message);
-    }
+  // Additional WebSocket logic goes here
+
+  // Example: Broadcasting a message to all connected clients
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
   });
 });
 
