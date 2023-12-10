@@ -1,75 +1,61 @@
 const connectTOMongo = require('./db');
-const express = require('express')
-var cors=require('cors')
-var path = require('path')
-require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const http = require('http');
 const socket = require('socket.io');
-const morgan = require('morgan');
+const path = require('path');
 
 connectTOMongo();
-const app = express()
-//const port = 5000
-const port = process.env.REACT_APP_PORT || 5000;
-app.use(express.json())
+const app = express();
 
+// Use process.env.PORT as the port or fallback to 5000
+const port = process.env.PORT || 5000;
 
-app.use(cors())
-app.use(express.json())
-server.use(morgan('dev'));
+app.use(express.json());
+app.use(cors());
 
-//availabel Routes
-server.use(bodyParser.urlencoded({ extended: true }));
+// Available Routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/notes', require('./routes/notes'));
 
-app.use('/api/auth',require('./routes/auth'))
-app.use('/api/notes',require('./routes/notes'))
-
-server.set("view engine", "ejs");
-
-/// static file start
-app.use(express.static(path.join(__dirname, "../frontend/build")));
-app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+// Serve static files
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 });
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!')
-// })
-async function main(){
-    await mongoose.connect(process.env.MONGO_URL);
-    console.log('Database connected');
-}
+// Create an HTTP server
+const server = http.createServer(app);
 
-// Create an http.Server instance using the Express server
-const httpServer = http.createServer(server);
-
-// Attach socket.io to the http.Server instance
-const io = socket(httpServer, {
-    cors: {
-        origin: 'https://inotebook-6pk4.onrender.com',
-        credentials: true
-    }
+// Attach Socket.io to the HTTP server
+const io = socket(server, {
+  cors: {
+    origin: 'https://inotebook-6pk4.onrender.com', // Update this with your frontend app's URL
+    credentials: true,
+  },
 });
 
 global.onlineUsers = new Map();
 
-// connection
+// WebSocket connection handling
 io.on('connection', (socket) => {
-    global.chatSocket = socket;
-    //login user id stored
-    socket.on('add-user', (userId) => {
-        onlineUsers.set(userId, socket.id);
-    });
+  global.chatSocket = socket;
 
-    // recieve msg
-    socket.on('send-msg', (data) => {
-        const sendUserSocket = onlineUsers.get(data.to);
-        if(sendUserSocket){
-            socket.to(sendUserSocket).emit('msg-recieve', data.message);
-        }
-    });
+  // Login user ID stored
+  socket.on('add-user', (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
+
+  // Receive message
+  socket.on('send-msg', (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit('msg-receive', data.message);
+    }
+  });
 });
 
-
-httpServer.listen(process.env.PORT, () => {
-    console.log('Server started');
+// Listen on the specified port
+server.listen(port, () => {
+  console.log(`iNoteBook Backend listening on port http://localhost:${port}`);
 });
