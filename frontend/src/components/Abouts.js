@@ -2,11 +2,11 @@ import React from "react";
 
 const Abouts = () => {
   return (
-    <div style={{ color: "#3a5a40" }}>
+    <div style={{ color: "black" }}>
       <h1 className="text-center my-5"><b>iNoteBook</b></h1>
       <h2 style={{ color: "black" }}>Create a Note:</h2>
 
-      <h6 style={{ color: "white" }}>
+      <h6 style={{ color: "black" }}>
         <b>
           Effortlessly capture your thoughts by creating new notes with just a
           few taps. Whether it's a brilliant idea, a to-do list, or meeting
@@ -17,7 +17,7 @@ const Abouts = () => {
 
       <h2 style={{ color: "black" }}>Update Note:</h2>
 
-      <h6 style={{ color: "white" }}>
+      <h6 style={{ color: "black" }}>
         <b>
           Stay organized by updating your notes as needed. Whether you want to
           add more details, make corrections, or simply refine your thoughts,
@@ -28,7 +28,7 @@ const Abouts = () => {
 
       <h2 style={{ color: "black" }}>Read Note:</h2>
 
-      <h6 style={{ color: "white" }}>
+      <h6 style={{ color: "black" }}>
         <b>
           Access your notes instantly with the "Read Note" feature. Browse
           through your collection of notes effortlessly, and enjoy a
@@ -39,7 +39,7 @@ const Abouts = () => {
       </h6>
       <h2 style={{ color: "black" }}>Delete Note:</h2>
 
-      <h6 style={{ color: "white" }}>
+      <h6 style={{ color: "black" }}>
         <b>
           Need to declutter or remove outdated information? iNoteBook allows you
           to delete notes effortlessly. Enjoy the flexibility of keeping your
